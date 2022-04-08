@@ -25,8 +25,8 @@
               <th th:text="${person.getId()}"></th>
               <td th:text="${person.getSecondName()}"></td>
               <td th:text="${person.getFirstName()}"></td>
-              <td th:text="${person.getDob()}"></td>
-              <td th:text="${person.getSalary()}"></td>
+              <td th:text="${{person.getDob()}}"></td>
+              <td th:text="${{person.getSalary()}}"></td>
           </tr>
           </tbody>
       </table>
