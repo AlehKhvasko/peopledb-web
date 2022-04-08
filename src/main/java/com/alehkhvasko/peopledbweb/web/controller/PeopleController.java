@@ -1,9 +1,11 @@
 package com.alehkhvasko.peopledbweb.web.controller;
 
 import com.alehkhvasko.peopledbweb.biz.model.Person;
+import com.alehkhvasko.peopledbweb.data.PersonRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.math.BigDecimal;
@@ -13,15 +15,18 @@ import java.util.List;
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
+    private PersonRepository personRepository;
+
+    public PeopleController(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
+    @ModelAttribute("people")
+    public Iterable<Person> getPeople(){
+        return personRepository.findAll();
+    }
 
     @GetMapping
-    public String getPeople(Model model) {
-        List<Person> people = List.of(
-                new Person(1L, "Al", "Snake", LocalDate.of(1980, 1, 1), new BigDecimal(300)),
-                new Person(2L, "John", "Brown", LocalDate.of(1980, 1, 1), new BigDecimal(250)),
-                new Person(3L, "Elli", "Ludvord", LocalDate.of(1980, 1, 1), new BigDecimal(210))
-        );
-        model.addAttribute("people", people);
+    public String showPeoplePage(Model model) {
         return "people";
     }
 }
